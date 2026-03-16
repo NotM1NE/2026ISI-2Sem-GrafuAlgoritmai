@@ -1,11 +1,11 @@
-﻿using Grafo_generavimas_ir_paprasta_paieska.Models;
-using Grafo_generavimas_ir_paprasta_paieska.Services;
+﻿using GrafoGeneravimasIrPaieska.Models;
+using GrafoGeneravimasIrPaieska.Services;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Net;
 
-namespace Grafo_generavimas_ir_paprasta_paieska;
+namespace GrafoGeneravimasIrPaieska;
 
 public class Program
 {
@@ -24,7 +24,7 @@ public class Program
         Console.WriteLine($"Ar yra grafas 1: {graph.HasVertex(1)}");
 
         GraphGenerator graphGenerator = new GraphGenerator();
-        Graph graph1 = null; 
+        Graph graph1 = null;
         try
         {
             graph1 = graphGenerator.GraphRandomGenerator(20, 4, 8, false);
@@ -99,7 +99,7 @@ public class Program
 
                         successfulTests++;
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
                     }

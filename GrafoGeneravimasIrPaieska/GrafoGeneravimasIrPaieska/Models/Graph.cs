@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 
-namespace Grafo_generavimas_ir_paprasta_paieska.Models
+namespace GrafoGeneravimasIrPaieska.Models
 {
     public class Graph
     {
@@ -66,17 +66,17 @@ namespace Grafo_generavimas_ir_paprasta_paieska.Models
         }
         public List<int> GetNeighbours(int vertex)
         {
-            if(!HasVertex(vertex))
+            if (!HasVertex(vertex))
                 throw new ArgumentException(nameof(vertex), "tokios virsunes grafas neturi");
 
             return new List<int>(AdjencyList[vertex]);
         }
         public void Print()
         {
-            foreach(var vertex in AdjencyList)
+            foreach (var vertex in AdjencyList)
             {
                 Console.Write($"{vertex.Key} : ");
-                foreach(var neighbour in vertex.Value)
+                foreach (var neighbour in vertex.Value)
                 {
                     Console.Write($"{neighbour} ");
                 }

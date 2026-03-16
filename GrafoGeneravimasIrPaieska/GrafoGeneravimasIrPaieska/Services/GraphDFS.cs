@@ -1,9 +1,9 @@
-﻿using Grafo_generavimas_ir_paprasta_paieska.Models;
+﻿using GrafoGeneravimasIrPaieska.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Grafo_generavimas_ir_paprasta_paieska.Services
+namespace GrafoGeneravimasIrPaieska.Services
 {
     public class GraphDFS
     {
@@ -40,7 +40,7 @@ namespace Grafo_generavimas_ir_paprasta_paieska.Services
                         //Console.WriteLine("Nesujungtas");
                         return false;
                     }
-                        
+
                 }
                 //Console.WriteLine("Sujungtas");
                 return true;
@@ -50,17 +50,17 @@ namespace Grafo_generavimas_ir_paprasta_paieska.Services
                 Console.WriteLine("Grafas neegzistuoja");
                 return false;
             }
-               
+
         }
         public bool IsBridge(Graph graph, int e, int v)
         {
-            if (!graph.HasEdge(e,v ))
+            if (!graph.HasEdge(e, v))
                 throw new ArgumentOutOfRangeException("Tokios briaunos nera");
 
             graph.RemoveEdge(e, v);
 
             bool isConnected = IsConnected(graph);
-            graph.AddEdge(e,v);
+            graph.AddEdge(e, v);
 
             return !isConnected;
         }

@@ -1,11 +1,10 @@
-﻿using System;
+﻿using GrafoGeneravimasIrPaieska.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using Grafo_generavimas_ir_paprasta_paieska.Models;
 
-namespace Grafo_generavimas_ir_paprasta_paieska.Services
+namespace GrafoGeneravimasIrPaieska.Services
 {
-    
     public class GraphGenerator
     {
         private readonly Random _random = new Random();
@@ -62,7 +61,7 @@ namespace Grafo_generavimas_ir_paprasta_paieska.Services
 
                     for (int v = 0; v < vertices; v++)
                     {
-                        if (e != v && !graph.HasEdge(e, v)  && graph.GetDegree(v) < kMax) // && graph.GetDegree(e) < kMax
+                        if (e != v && !graph.HasEdge(e, v) && graph.GetDegree(v) < kMax) // && graph.GetDegree(e) < kMax
                             possibleVertices.Add(v);
                     }
                     if (possibleVertices.Count == 0)
