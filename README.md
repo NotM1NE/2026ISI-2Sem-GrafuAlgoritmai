@@ -17,3 +17,4 @@ Projekte realizuotas neorientuotas grafas, atsitiktinis grafo generavimas pagal 
 
 ## Naudotos technologijos
 - **C#**
+- **.net**
