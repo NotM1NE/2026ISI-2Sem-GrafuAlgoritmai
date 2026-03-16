@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\Jakub\\OneDrive\\01_VU\\2_Semestras\\04_Grafu Algoritmai\\Grafo generavimas ir paprasta paieska\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E1FBFF80-2890-B567-A63F-7CE6F829DB9F}|Grafo generavimas ir paprasta paieska\\Grafo generavimas ir paprasta paieska.csproj|c:\\users\\jakub\\onedrive\\01_vu\\2_semestras\\04_grafu algoritmai\\grafo generavimas ir paprasta paieska\\grafo generavimas ir paprasta paieska\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E1FBFF80-2890-B567-A63F-7CE6F829DB9F}|Grafo generavimas ir paprasta paieska\\Grafo generavimas ir paprasta paieska.csproj|solutionrelative:grafo generavimas ir paprasta paieska\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{E1FBFF80-2890-B567-A63F-7CE6F829DB9F}|Grafo generavimas ir paprasta paieska\\Grafo generavimas ir paprasta paieska.csproj|c:\\users\\jakub\\onedrive\\01_vu\\2_semestras\\04_grafu algoritmai\\grafo generavimas ir paprasta paieska\\grafo generavimas ir paprasta paieska\\models\\graph.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E1FBFF80-2890-B567-A63F-7CE6F829DB9F}|Grafo generavimas ir paprasta paieska\\Grafo generavimas ir paprasta paieska.csproj|solutionrelative:grafo generavimas ir paprasta paieska\\models\\graph.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1FBFF80-2890-B567-A63F-7CE6F829DB9F}|Grafo generavimas ir paprasta paieska\\Grafo generavimas ir paprasta paieska.csproj|c:\\users\\jakub\\onedrive\\01_vu\\2_semestras\\04_grafu algoritmai\\grafo generavimas ir paprasta paieska\\grafo generavimas ir paprasta paieska\\services\\graphdfs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1FBFF80-2890-B567-A63F-7CE6F829DB9F}|Grafo generavimas ir paprasta paieska\\Grafo generavimas ir paprasta paieska.csproj|solutionrelative:grafo generavimas ir paprasta paieska\\services\\graphdfs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E1FBFF80-2890-B567-A63F-7CE6F829DB9F}|Grafo generavimas ir paprasta paieska\\Grafo generavimas ir paprasta paieska.csproj|c:\\users\\jakub\\onedrive\\01_vu\\2_semestras\\04_grafu algoritmai\\grafo generavimas ir paprasta paieska\\grafo generavimas ir paprasta paieska\\services\\graphgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E1FBFF80-2890-B567-A63F-7CE6F829DB9F}|Grafo generavimas ir paprasta paieska\\Grafo generavimas ir paprasta paieska.csproj|solutionrelative:grafo generavimas ir paprasta paieska\\services\\graphgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E1FBFF80-2890-B567-A63F-7CE6F829DB9F}|Grafo generavimas ir paprasta paieska\\Grafo generavimas ir paprasta paieska.csproj|c:\\users\\jakub\\onedrive\\01_vu\\2_semestras\\04_grafu algoritmai\\grafo generavimas ir paprasta paieska\\grafo generavimas ir paprasta paieska\\services\\graphdfs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E1FBFF80-2890-B567-A63F-7CE6F829DB9F}|Grafo generavimas ir paprasta paieska\\Grafo generavimas ir paprasta paieska.csproj|solutionrelative:grafo generavimas ir paprasta paieska\\services\\graphdfs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E1FBFF80-2890-B567-A63F-7CE6F829DB9F}|Grafo generavimas ir paprasta paieska\\Grafo generavimas ir paprasta paieska.csproj|c:\\users\\jakub\\onedrive\\01_vu\\2_semestras\\04_grafu algoritmai\\grafo generavimas ir paprasta paieska\\grafo generavimas ir paprasta paieska\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1FBFF80-2890-B567-A63F-7CE6F829DB9F}|Grafo generavimas ir paprasta paieska\\Grafo generavimas ir paprasta paieska.csproj|solutionrelative:grafo generavimas ir paprasta paieska\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,17 +26,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 215,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Graph.cs",
               "DocumentMoniker": "C:\\Users\\Jakub\\OneDrive\\01_VU\\2_Semestras\\04_Grafu Algoritmai\\Grafo generavimas ir paprasta paieska\\Grafo generavimas ir paprasta paieska\\Models\\Graph.cs",
               "RelativeDocumentMoniker": "Grafo generavimas ir paprasta paieska\\Models\\Graph.cs",
               "ToolTip": "C:\\Users\\Jakub\\OneDrive\\01_VU\\2_Semestras\\04_Grafu Algoritmai\\Grafo generavimas ir paprasta paieska\\Grafo generavimas ir paprasta paieska\\Models\\Graph.cs",
               "RelativeToolTip": "Grafo generavimas ir paprasta paieska\\Models\\Graph.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAuwDgAAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAACwAAAAAAAAAAAAuwDkAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-15T16:31:59.084Z",
               "IsPinned": true,
@@ -44,13 +44,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "GraphDFS.cs",
               "DocumentMoniker": "C:\\Users\\Jakub\\OneDrive\\01_VU\\2_Semestras\\04_Grafu Algoritmai\\Grafo generavimas ir paprasta paieska\\Grafo generavimas ir paprasta paieska\\Services\\GraphDFS.cs",
               "RelativeDocumentMoniker": "Grafo generavimas ir paprasta paieska\\Services\\GraphDFS.cs",
               "ToolTip": "C:\\Users\\Jakub\\OneDrive\\01_VU\\2_Semestras\\04_Grafu Algoritmai\\Grafo generavimas ir paprasta paieska\\Grafo generavimas ir paprasta paieska\\Services\\GraphDFS.cs",
               "RelativeToolTip": "Grafo generavimas ir paprasta paieska\\Services\\GraphDFS.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-15T18:44:26.971Z",
               "EditorCaption": ""
@@ -63,20 +63,20 @@
               "RelativeDocumentMoniker": "Grafo generavimas ir paprasta paieska\\Services\\GraphGenerator.cs",
               "ToolTip": "C:\\Users\\Jakub\\OneDrive\\01_VU\\2_Semestras\\04_Grafu Algoritmai\\Grafo generavimas ir paprasta paieska\\Grafo generavimas ir paprasta paieska\\Services\\GraphGenerator.cs",
               "RelativeToolTip": "Grafo generavimas ir paprasta paieska\\Services\\GraphGenerator.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAxwCMAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-15T17:28:32.851Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Jakub\\OneDrive\\01_VU\\2_Semestras\\04_Grafu Algoritmai\\Grafo generavimas ir paprasta paieska\\Grafo generavimas ir paprasta paieska\\Program.cs",
               "RelativeDocumentMoniker": "Grafo generavimas ir paprasta paieska\\Program.cs",
               "ToolTip": "C:\\Users\\Jakub\\OneDrive\\01_VU\\2_Semestras\\04_Grafu Algoritmai\\Grafo generavimas ir paprasta paieska\\Grafo generavimas ir paprasta paieska\\Program.cs",
               "RelativeToolTip": "Grafo generavimas ir paprasta paieska\\Program.cs",
-              "ViewState": "AgIAAEAAAAAAAAAAAAAowDkAAABOAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADkAAABOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-15T16:22:39.778Z",
               "EditorCaption": ""
