@@ -99,8 +99,9 @@ public class Program
 
                         successfulTests++;
                     }
-                    catch
+                    catch(Exception ex)
                     {
+                        Console.WriteLine(ex.Message);
                     }
                 }
 
