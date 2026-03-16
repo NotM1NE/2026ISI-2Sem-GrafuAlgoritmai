@@ -39,8 +39,7 @@
               "ViewState": "AgIAADUAAAAAAAAAAAAAwDkAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-15T16:31:59.084Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -74,7 +73,7 @@
               "RelativeDocumentMoniker": "Grafo generavimas ir paprasta paieska\\Program.cs",
               "ToolTip": "C:\\Users\\Jakub\\Documents\\02_GitHub\\2026ISI-2Sem-GrafuAlgoritmai\\Grafo generavimas ir paprasta paieska\\Grafo generavimas ir paprasta paieska\\Program.cs",
               "RelativeToolTip": "Grafo generavimas ir paprasta paieska\\Program.cs",
-              "ViewState": "AgIAAEMAAAAAAAAAAAAgwFEAAAAyAAAAAAAAAA==",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAgwE0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-15T16:22:39.778Z",
               "EditorCaption": ""
