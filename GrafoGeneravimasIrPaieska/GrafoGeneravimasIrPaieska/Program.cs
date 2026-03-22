@@ -11,38 +11,220 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        Graph graph = new Graph(5, false);
+        Graph currentGraph = null;
 
-        graph.AddEdge(0, 1);
-        graph.AddEdge(0, 2);
-        graph.AddEdge(1, 3);
-        graph.AddEdge(3, 4);
+        while(true)
+        {
+            Console.WriteLine();
+            Console.WriteLine("1 - Sukurti grafa ranka");
+            Console.WriteLine("2 - Generuoti atsitiktini grafa");
+            Console.WriteLine("3 - Spausdinti dabartini grafa");
+            Console.WriteLine("4 - Patikrinti ar grafas jungus");
+            Console.WriteLine("5 - Patikrinti ar briauna yra tiltas");
+            Console.WriteLine("6 - Paleisti greicio testa");
+            Console.WriteLine("0 - Baigti darba");
+            Console.Write("Pasirinkimas: ");
 
+            string? choice = Console.ReadLine();
+
+            switch(choice)
+            {
+                case "1":
+                    currentGraph = CreateGraph();
+                    break;
+                case "2":
+                    currentGraph = GenerateRandomGraph();
+                    break;
+                case "3":
+                    PrintGraph(currentGraph);
+                    break;
+                case "4":
+                    CheckIfGraphIsConnected(currentGraph);
+                    break;
+                case "5":
+                    CheckBridge(currentGraph);
+                    break;
+                case "6":
+                    RunPerformanceTest();
+                    break;
+                case "0":
+                    return;
+                default:
+                    Console.WriteLine("Neteisinga ivestias");
+                    break;
+            }
+        }
+
+    }
+    private static Graph CreateGraph()
+    {
+        bool directed;
+        Console.WriteLine("Iveskite virsuniu skaiciu: ");
+        int vertices = int.Parse(Console.ReadLine());
+
+        Console.WriteLine("Ar grafas orientuotas? (taip/ne)");
+        
+        while(true)
+        {
+            var output = Console.ReadLine()?.Trim().ToLower();
+            if (output == "taip")
+            {
+                directed = true;
+                break;
+            }
+            else if (output == "ne")
+            {
+                directed = false;
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Neteisinga ivestis");
+            }
+        }
+        Graph graph = new Graph(vertices, directed);
+
+        Console.WriteLine("Iveskite briaunas formatu: e v");
+        Console.WriteLine("Kai baigsite, rasykite: done");
+
+        while (true)
+        {
+            Console.Write("Briauna: ");
+            var input = Console.ReadLine()?.Trim().ToLower();
+
+            if (input == "done")
+                break;
+
+            if (string.IsNullOrEmpty(input))
+                continue;
+
+            string[] parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+            if (parts.Length != 2)
+            {
+                Console.WriteLine("Neteisingas formatas. Naudokite: e v");
+                continue;
+            }
+
+            if (!int.TryParse(parts[0], out int e) || !int.TryParse(parts[1], out int v))
+            {
+                Console.WriteLine("Reikia ivesti du sveikus skaicius");
+                continue;
+            }
+
+            if(!graph.HasVertex(e) || !graph.HasVertex(v))
+            {
+                Console.WriteLine("Tokia virsune neegzistuoja");
+                continue;
+            }
+
+            if(e == v)
+            {
+                Console.WriteLine("Kilpa negalima.");
+                continue;
+            }
+            if (graph.HasEdge(e, v))
+            {
+                Console.WriteLine("Tokia briauna jau egzistuoja.");
+                continue;
+            }
+            graph.AddEdge(e, v);
+            Console.WriteLine($"Prideta briauna: {e}-{v}");
+        }
+        Console.WriteLine("Sukurtas grafas:");
         graph.Print();
-        Console.WriteLine($"Ar yra briauna 0-1: {graph.HasEdge(0, 1)}");
-        Console.WriteLine($"Ar yra briauna 1-4: {graph.HasEdge(1, 4)}");
-        Console.WriteLine($"Ar yra grafas 1: {graph.HasVertex(1)}");
 
+        return graph;
+    }
+    private static Graph GenerateRandomGraph()
+    {
         GraphGenerator graphGenerator = new GraphGenerator();
-        Graph graph1 = null;
         try
         {
-            graph1 = graphGenerator.GraphRandomGenerator(20, 4, 8, false);
+            bool directed;
 
-            graph1.Print();
+            Console.WriteLine("Iveskite virsuniu skaiciu: ");
+            int vertices = int.Parse(Console.ReadLine());
+            Console.WriteLine("Iveskite kMin: ");
+            int kMin = int.Parse(Console.ReadLine());
+            Console.WriteLine("Iveskite kMax: ");
+            int kMax = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Ar grafas orientuotas? (taip/ne)");
+            while (true)
+            {
+                var output = Console.ReadLine()?.Trim().ToLower();
+                if (output == "taip")
+                {
+                    directed = true;
+                    break;
+                }
+                else if (output == "ne")
+                {
+                    directed = false;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Neteisinga ivestis");
+                }
+            }
+
+            Graph graph = graphGenerator.GraphRandomGenerator(vertices, kMin, kMax, directed);
+
+            Console.WriteLine("Grafas sekmingai sugeneruotas:");
+            graph.Print();
+
+            return graph;
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
+            throw;
+        }
+    }
+    private static void PrintGraph(Graph graph)
+    {
+        if (graph != null)
+            graph.Print();
+        else
+            Console.WriteLine("Grafas neegizstuoja");
+    }
+    private static void CheckIfGraphIsConnected(Graph graph)
+    {
+        GraphDFS graphDFS = new GraphDFS();
+        if (graph != null)
+        {
+            bool isConnected = graphDFS.IsConnected(graph);
+            Console.WriteLine(isConnected ? "Grafas yra jungus." : "Grafas nera jungus.");
+        }
+        else
+            Console.WriteLine("Grafas neegizstuoja");
+    }
+    private static void CheckBridge(Graph graph)
+    {
+        GraphDFS graphDFS = new GraphDFS();
+        Console.WriteLine("Iveskite pirma virsune: ");
+        int e = int.Parse(Console.ReadLine());
+        Console.WriteLine("Iveskite antra virsune: ");
+        int v = int.Parse(Console.ReadLine());
+
+        if (!graph.HasEdge(e, v))
+        {
+            Console.WriteLine("Tokios briaunos grafe nera.");
+            return;
         }
 
+        bool isBridge = graphDFS.IsBridge(graph, e, v);
+
+        Console.WriteLine(isBridge
+            ? $"Briauna {e}-{v} yra tiltas."
+            : $"Briauna {e}-{v} nera tiltas.");
+    }
+    private static void RunPerformanceTest()
+    {
         GraphDFS graphDFS = new GraphDFS();
-        var result = graphDFS.IsConnected(graph1);
-
-
-        //paleidziame testa
-        GraphGenerator graphGeneratorTest = new GraphGenerator();
-        GraphDFS graphDFSTest = new GraphDFS();
+        GraphGenerator graphGenerator = new GraphGenerator();
 
         int[] vertexCounts = { 100, 200, 500, 1000 };
         int testCount = 5;
@@ -72,7 +254,7 @@ public class Program
                         Stopwatch stopwatch = new Stopwatch();
 
                         stopwatch.Start();
-                        Graph graphTest = graphGeneratorTest.GraphRandomGenerator(vertices, kMin, kMax, false);
+                        Graph graphTest = graphGenerator.GraphRandomGenerator(vertices, kMin, kMax, false);
                         stopwatch.Stop();
                         totalGenerationTime += stopwatch.Elapsed.TotalMilliseconds;
 
@@ -92,7 +274,7 @@ public class Program
                         if (e != -1 && v != -1)
                         {
                             stopwatch.Restart();
-                            graphDFSTest.IsBridge(graphTest, e, v);
+                            graphDFS.IsBridge(graphTest, e, v);
                             stopwatch.Stop();
                             totalBridgeTime += stopwatch.Elapsed.TotalMilliseconds;
                         }
@@ -120,6 +302,5 @@ public class Program
 
             Console.WriteLine();
         }
-
     }
 }
