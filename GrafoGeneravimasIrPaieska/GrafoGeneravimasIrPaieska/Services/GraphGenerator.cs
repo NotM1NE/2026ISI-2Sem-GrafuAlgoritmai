@@ -148,7 +148,6 @@ namespace GrafoGeneravimasIrPaieska.Services
                 if (graph.GetDegree(i) != k)
                     return false;
             }
-
             return true;
         }
     }
