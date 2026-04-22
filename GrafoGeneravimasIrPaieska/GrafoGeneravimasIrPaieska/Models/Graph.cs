@@ -22,6 +22,7 @@ namespace GrafoGeneravimasIrPaieska.Models
                 AdjencyList[i] = new List<int>();
             }
         }
+
         public bool HasVertex(int vertex)
         {
             return AdjencyList.ContainsKey(vertex);

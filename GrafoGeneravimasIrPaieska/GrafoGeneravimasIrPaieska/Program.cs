@@ -15,6 +15,7 @@ public class Program
 
         while(true)
         {
+            //UI
             Console.WriteLine();
             Console.WriteLine("1 - Sukurti grafa ranka");
             Console.WriteLine("2 - Generuoti atsitiktini grafa");

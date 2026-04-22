@@ -45,12 +45,12 @@ namespace GrafoGeneravimasIrPaieska.Services
         private Graph GenerateConnectedRegularGraph(int vertices, int k, bool directed)
         {
             if (directed)
-                throw new Exception("Kol kas veikia tik su neorientuotu grafu");
+                throw new Exception("Veikia tik su neorientuotu grafu");
 
             if (k >= vertices)
                 throw new Exception("k turi buti mazesnis uz virsuniu skaiciu");
 
-            if ((vertices * k) % 2 != 0)
+            if ((vertices * k) % 2 != 0) //virsuniu laipsniu suma turi buti lygine, kad grafas butu galimas 
                 throw new Exception("Tokio grafo sugeneruoti negalima");
 
             if (k == 0)
@@ -77,18 +77,15 @@ namespace GrafoGeneravimasIrPaieska.Services
             {
                 Graph graph = new Graph(vertices, false);
 
-                // 1. Sukuriam cikla, kad grafas butu jungus
                 for (int i = 0; i < vertices; i++)
                 {
-                    int next = (i + 1) % vertices;
+                    int next = (i + 1) % vertices; //padaro cikla 0-1-2-3-4-0
                     graph.AddEdge(i, next);
                 }
-
-                // Jei reikia tik 2 laipsnio, ciklo uztenka
+                //is karto graziname nes jau kiekvienas virsune turi 2 kaimynus tai jau ispildo 2-reguliarumo salyga
                 if (k == 2)
                     return graph;
-
-                // 2. Pridedam papildomas briaunas
+                //jei k > 2, vien ciklo nepakanka, reikia prideti papildomu kraštu
                 bool success = AddRemainingEdges(graph, vertices, k);
 
                 if (success && AllVerticesHaveDegree(graph, vertices, k))
@@ -108,7 +105,7 @@ namespace GrafoGeneravimasIrPaieska.Services
 
                 if (tries > maxTries)
                     return false;
-
+                //surasome tuos taskus kurie dar neturi pakankamai krastu, kad butu k-reguliarus
                 List<int> notFullVertices = new List<int>();
 
                 for (int i = 0; i < vertices; i++)
@@ -116,7 +113,7 @@ namespace GrafoGeneravimasIrPaieska.Services
                     if (graph.GetDegree(i) < k)
                         notFullVertices.Add(i);
                 }
-
+                //jei liko viena virsune tai jau niseis nes virsune su pacia savimi susijungti negali
                 if (notFullVertices.Count < 2)
                     return false;
 
@@ -140,7 +137,7 @@ namespace GrafoGeneravimasIrPaieska.Services
 
             return true;
         }
-
+        //kiekviena virsune turi buti sujungta su tiksliai k kitomis virsunemis, kad grafas butu k-reguliarus
         private bool AllVerticesHaveDegree(Graph graph, int vertices, int k)
         {
             for (int i = 0; i < vertices; i++)

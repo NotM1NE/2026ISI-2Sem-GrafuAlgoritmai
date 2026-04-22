@@ -36,13 +36,9 @@ namespace GrafoGeneravimasIrPaieska.Services
                 for (int i = 0; i < visited.Count; i++)
                 {
                     if (!visited[i])
-                    {
-                        //Console.WriteLine("Nesujungtas");
                         return false;
-                    }
 
                 }
-                //Console.WriteLine("Sujungtas");
                 return true;
             }
             else
