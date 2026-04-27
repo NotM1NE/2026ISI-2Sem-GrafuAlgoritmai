@@ -9,17 +9,17 @@ namespace GrafoGeneravimasIrPaieska.Models
     {
         public int Vertices { get; set; }
         public bool Directed { get; set; }
-        public Dictionary<int, List<int>> AdjencyList { get; set; }      //gretimo sarasas
+        public Dictionary<int, List<Edge>> AdjencyList { get; set; }      //gretimo sarasas
 
         public Graph(int vertices, bool directed = false)
         {
             Vertices = vertices;
             Directed = directed;
-            AdjencyList = new Dictionary<int, List<int>>();
+            AdjencyList = new Dictionary<int, List<Edge>>();
 
             for (int i = 0; i < vertices; i++)
             {
-                AdjencyList[i] = new List<int>();
+                AdjencyList[i] = new List<Edge>();
             }
         }
 
@@ -27,36 +27,45 @@ namespace GrafoGeneravimasIrPaieska.Models
         {
             return AdjencyList.ContainsKey(vertex);
         }
-        public bool HasEdge(int e, int v)
+        public bool HasEdge(int from, int to)
         {
-            if (!HasVertex(e) || !HasVertex(v))
+            if (!HasVertex(from) || !HasVertex(to))
                 return false;
 
-            return AdjencyList[e].Contains(v);
+            return AdjencyList[from].Any(e => e.To == to);
         }
-        public void AddEdge(int e, int v)
+        public void AddEdge(int from, int to, int weight)
         {
-            if (!HasVertex(e))
-                throw new ArgumentException(nameof(e), "tokios virsunes grafas neturi");
-            if (!HasVertex(v))
-                throw new ArgumentException(nameof(v), "tokios virsunes grafas neturi");
-            if (e == v)
+            if (!HasVertex(from))
+                throw new ArgumentException(nameof(from), "tokios virsunes grafas neturi");
+            if (!HasVertex(to))
+                throw new ArgumentException(nameof(to), "tokios virsunes grafas neturi");
+            if (from == to)
                 throw new ArgumentException("Kilpos paprastame grafe negalimos");
-            if (HasEdge(e, v))
+            if (HasEdge(from, to))
                 throw new ArgumentException("Tokia briauna jau egzistuoja");
 
-            AdjencyList[e].Add(v);
+            AdjencyList[from].Add(new Edge(from, to, weight));
             if (Directed == false)
-                AdjencyList[v].Add(e);
+                AdjencyList[to].Add(new Edge(to, from, weight));
         }
-        public void RemoveEdge(int e, int v)
+        public void ChangeEdgeWeight(int from, int to, int weight)
         {
-            if (!HasEdge(e, v))
+            Edge edge = AdjencyList[from].First(e => e.To == to);
+
+            if(edge == null)
+                throw new ArgumentException(nameof(edge), "tokios briaunos grafas neturi");
+
+            edge.Weight = weight;
+        }
+        public void RemoveEdge(int from, int to, int weight)
+        {
+            if (!HasEdge(from, to))
                 throw new ArgumentException("tokios brianos grafas neturi");
 
-            AdjencyList[e].Remove(v);
+            AdjencyList[from].RemoveAll(edge => edge.To == to);
             if (Directed == false)
-                AdjencyList[v].Remove(e);
+                AdjencyList[to].RemoveAll(edge => edge.To == from);
         }
         public int GetDegree(int vertex)
         {
@@ -65,21 +74,48 @@ namespace GrafoGeneravimasIrPaieska.Models
 
             return AdjencyList[vertex].Count;
         }
-        public List<int> GetNeighbours(int vertex)
+        public List<Edge> GetNeighbours(int vertex)
         {
             if (!HasVertex(vertex))
                 throw new ArgumentException(nameof(vertex), "tokios virsunes grafas neturi");
 
-            return new List<int>(AdjencyList[vertex]);
+            return AdjencyList[vertex];
+        }
+        public List<Edge> GetAllEdges()
+        {
+            List<Edge> edges = new List<Edge>();
+
+            foreach(var vertex in AdjencyList)
+            {
+                foreach(var edge in vertex.Value)
+                {
+                    edges.Add(edge);
+                }
+            }
+            return edges;
+        }
+        public int GetInDegree(int vertex)
+        {
+            int count = 0;
+
+            foreach (var list in AdjencyList.Values)
+            {
+                foreach (var edge in list)
+                {
+                    if (edge.To == vertex)
+                        count++;
+                }
+            }
+            return count;
         }
         public void Print()
         {
             foreach (var vertex in AdjencyList)
             {
                 Console.Write($"{vertex.Key} : ");
-                foreach (var neighbour in vertex.Value)
+                foreach (var edge in vertex.Value)
                 {
-                    Console.Write($"{neighbour} ");
+                    Console.Write($"{edge.To}({edge.Weight}) ");
                 }
                 Console.WriteLine();
             }

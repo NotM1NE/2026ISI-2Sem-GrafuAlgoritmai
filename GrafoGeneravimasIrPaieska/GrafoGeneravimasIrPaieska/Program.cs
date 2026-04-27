@@ -85,15 +85,15 @@ public class Program
         }
         Graph graph = new Graph(vertices, directed);
 
-        Console.WriteLine("Iveskite briaunas formatu: e v");
-        Console.WriteLine("Kai baigsite, rasykite: done");
+        Console.WriteLine("Iveskite briaunas formatu: e v weight");
+        Console.WriteLine("Kai baigsite, rasykite: 0");
 
         while (true)
         {
             Console.Write("Briauna: ");
             var input = Console.ReadLine()?.Trim().ToLower();
 
-            if (input == "done")
+            if (input == "0")
                 break;
 
             if (string.IsNullOrEmpty(input))
@@ -101,15 +101,15 @@ public class Program
 
             string[] parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-            if (parts.Length != 2)
+            if (parts.Length != 3)
             {
                 Console.WriteLine("Neteisingas formatas. Naudokite: e v");
                 continue;
             }
 
-            if (!int.TryParse(parts[0], out int e) || !int.TryParse(parts[1], out int v))
+            if (!int.TryParse(parts[0], out int e) || !int.TryParse(parts[1], out int v) || !int.TryParse(parts[2], out int weight))
             {
-                Console.WriteLine("Reikia ivesti du sveikus skaicius");
+                Console.WriteLine("Reikia ivesti tris sveikus skaicius");
                 continue;
             }
 
@@ -129,8 +129,8 @@ public class Program
                 Console.WriteLine("Tokia briauna jau egzistuoja.");
                 continue;
             }
-            graph.AddEdge(e, v);
-            Console.WriteLine($"Prideta briauna: {e}-{v}");
+            graph.AddEdge(e, v, weight);
+            Console.WriteLine($"Prideta briauna: {e}->{v}({weight})");
         }
         Console.WriteLine("Sukurtas grafas:");
         graph.Print();
@@ -267,7 +267,7 @@ public class Program
                             if (graphTest.AdjencyList[vertex].Count > 0)
                             {
                                 e = vertex;
-                                v = graphTest.AdjencyList[vertex][0];
+                                v = graphTest.AdjencyList[vertex][0].To;
                                 break;
                             }
                         }

@@ -14,11 +14,11 @@ namespace GrafoGeneravimasIrPaieska.Services
 
             visited[startVertex] = true;
 
-            foreach (int neighbor in graph.AdjencyList[startVertex])
+            foreach (Edge edge in graph.AdjencyList[startVertex])
             {
-                if (!visited[neighbor])
+                if (!visited[edge.To])
                 {
-                    DFS(graph, neighbor, visited);
+                    DFS(graph, edge.To, visited);
                 }
             }
         }
@@ -48,15 +48,22 @@ namespace GrafoGeneravimasIrPaieska.Services
             }
 
         }
-        public bool IsBridge(Graph graph, int e, int v)
+        public bool IsBridge(Graph graph, int from, int to)
         {
-            if (!graph.HasEdge(e, v))
+            if (!graph.HasEdge(from, to))
                 throw new ArgumentOutOfRangeException("Tokios briaunos nera");
 
-            graph.RemoveEdge(e, v);
+            Edge edge = graph.AdjencyList[from].Find(x => x.To == to);
+
+            if (edge == null)
+                throw new ArgumentNullException(nameof(edge), "Tokios brianos nera");
+
+            int weight = edge.Weight;
+
+            graph.RemoveEdge(from, to, weight);
 
             bool isConnected = IsConnected(graph);
-            graph.AddEdge(e, v);
+            graph.AddEdge(from, to, weight);
 
             return !isConnected;
         }
