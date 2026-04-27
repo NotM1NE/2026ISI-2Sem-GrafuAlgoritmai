@@ -37,7 +37,7 @@ namespace GrafoGeneravimasIrPaieska.Services
                         throw new Exception("Nepavyko sugeneruoti grafo su nurodytais parametrais");
 
                     int randomIndex = _random.Next(possibleVertices.Count);
-                    graph.AddEdge(e, possibleVertices[randomIndex]);
+                    graph.AddEdge(e, possibleVertices[randomIndex], GenerateWeight());
                 }
             }
             return graph;
@@ -66,7 +66,7 @@ namespace GrafoGeneravimasIrPaieska.Services
                 if (vertices == 2)
                 {
                     Graph graph = new Graph(2, false);
-                    graph.AddEdge(0, 1);
+                    graph.AddEdge(0, 1, GenerateWeight());
                     return graph;
                 }
 
@@ -80,7 +80,7 @@ namespace GrafoGeneravimasIrPaieska.Services
                 for (int i = 0; i < vertices; i++)
                 {
                     int next = (i + 1) % vertices; //padaro cikla 0-1-2-3-4-0
-                    graph.AddEdge(i, next);
+                    graph.AddEdge(i, next, GenerateWeight());
                 }
                 //is karto graziname nes jau kiekvienas virsune turi 2 kaimynus tai jau ispildo 2-reguliarumo salyga
                 if (k == 2)
@@ -132,7 +132,7 @@ namespace GrafoGeneravimasIrPaieska.Services
                 if (graph.GetDegree(b) >= k)
                     continue;
 
-                graph.AddEdge(a, b);
+                graph.AddEdge(a, b, GenerateWeight());
             }
 
             return true;
@@ -146,6 +146,10 @@ namespace GrafoGeneravimasIrPaieska.Services
                     return false;
             }
             return true;
+        }
+        private int GenerateWeight()
+        {
+            return _random.Next(-5, 16);
         }
     }
 }
