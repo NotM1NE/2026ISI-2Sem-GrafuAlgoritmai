@@ -149,7 +149,7 @@ namespace GrafoGeneravimasIrPaieska.Services
         }
         private int GenerateWeight()
         {
-            return _random.Next(-5, 16);
+            return _random.Next(-2, 16);
         }
     }
 }

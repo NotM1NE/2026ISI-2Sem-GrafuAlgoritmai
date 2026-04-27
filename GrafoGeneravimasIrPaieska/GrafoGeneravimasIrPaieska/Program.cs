@@ -23,6 +23,10 @@ public class Program
             Console.WriteLine("4 - Patikrinti ar grafas jungus");
             Console.WriteLine("5 - Patikrinti ar briauna yra tiltas");
             Console.WriteLine("6 - Paleisti greicio testa");
+            Console.WriteLine("7 - Bellman-Ford testas");
+            Console.WriteLine("8 - Bellman-Ford su eile");
+            Console.WriteLine("9 - Taisyti neigiamus ciklus");
+            Console.WriteLine("10 - Bellman-Ford greicio testas");
             Console.WriteLine("0 - Baigti darba");
             Console.Write("Pasirinkimas: ");
 
@@ -48,6 +52,18 @@ public class Program
                 case "6":
                     RunPerformanceTest();
                     break;
+                case "7":
+                    RunBellmanFortTest(currentGraph);
+                    break;
+                case "8":
+                    RunQueueBellmanFord(currentGraph);
+                    break;
+                case "9":
+                    FixNegativeCycles(currentGraph);
+                    break;
+                case "10":
+                    RunBellmanFordPerformanceTest();
+                    break;
                 case "0":
                     return;
                 default:
@@ -57,6 +73,8 @@ public class Program
         }
 
     }
+
+
     private static Graph CreateGraph()
     {
         bool directed;
@@ -294,6 +312,141 @@ public class Program
                     double avgBridgeTime = totalBridgeTime / successfulTests;
 
                     Console.WriteLine($"{vertices}\t{avgGenerationTime:F3}\t\t\t{avgBridgeTime:F3}");
+                }
+                else
+                {
+                    Console.WriteLine($"{vertices}\tNepavyko sugeneruoti");
+                }
+            }
+
+            Console.WriteLine();
+        }
+    }
+    private static void RunBellmanFortTest(Graph graph)
+    {
+        if (graph == null)
+        {
+            Console.WriteLine("Grafas neegzistuoja");
+            return;
+        }
+
+        Console.WriteLine("Iveskite pradine virsune: ");
+        int start = int.Parse(Console.ReadLine());
+
+        BellmanFord bellmanFord = new BellmanFord();
+
+        BellmanFordResult result = bellmanFord.TrivialBellmanFordResult(graph, start);
+
+        if (result.NegativeCycleEdge != null)
+        {
+            Console.WriteLine("Grafe yra neigiamas ciklas.");
+            Console.WriteLine($"Problema rasta ties briauna: {result.NegativeCycleEdge}");
+        }
+        else
+        {
+            bellmanFord.PrintDistances(result, start);
+        }
+    }
+
+    private static void RunQueueBellmanFord(Graph graph)
+    {
+        if (graph == null)
+        {
+            Console.WriteLine("Grafas neegzistuoja");
+            return;
+        }
+
+        Console.WriteLine("Iveskite pradine virsune:");
+        int start = int.Parse(Console.ReadLine());
+
+        BellmanFord bellmanFord = new BellmanFord();
+
+        BellmanFordResult result = bellmanFord.QueueBellmanFord(graph, start);
+
+        if (result.NegativeCycleEdge != null)
+        {
+            Console.WriteLine("Grafe yra neigiamas ciklas.");
+            Console.WriteLine($"Problema rasta ties briauna: {result.NegativeCycleEdge}");
+        }
+        else
+        {
+            bellmanFord.PrintDistances(result, start);
+        }
+    }
+
+    private static void FixNegativeCycles(Graph graph)
+    {
+        if (graph == null)
+        {
+            Console.WriteLine("Grafas neegzistuoja");
+            return;
+        }
+
+        Console.WriteLine("Iveskite pradine virsune:");
+        int start = int.Parse(Console.ReadLine());
+
+        BellmanFord bellmanFord = new BellmanFord();
+
+        bellmanFord.FixNegativeCycles(graph, start);
+    }
+    private static void RunBellmanFordPerformanceTest()
+    {
+        GraphGenerator graphGenerator = new GraphGenerator();
+        BellmanFord bellmanFord = new BellmanFord();
+
+        int[] vertexCounts = { 100, 200, 500, 1000 };
+        int testCount = 5;
+
+        int[] kMinValues = { 2, 4, 6 };
+        int[] kMaxValues = { 4, 8, 10 };
+
+        for (int s = 0; s < kMinValues.Length; s++)
+        {
+            int kMin = kMinValues[s];
+            int kMax = kMaxValues[s];
+
+            Console.WriteLine("-----------------------------------------------");
+            Console.WriteLine($"Tyrimas su kMin = {kMin}, kMax = {kMax}");
+            Console.WriteLine("V\tTrivialus B-F (ms)\tB-F su eile (ms)");
+
+            foreach (int vertices in vertexCounts)
+            {
+                double totalTrivialTime = 0;
+                double totalQueueTime = 0;
+                int successfulTests = 0;
+
+                for (int i = 0; i < testCount; i++)
+                {
+                    try
+                    {
+                        Graph graphTest = graphGenerator.GraphRandomGenerator(vertices, kMin, kMax, true);
+
+                        Stopwatch stopwatch = new Stopwatch();
+
+                        stopwatch.Start();
+                        bellmanFord.TrivialBellmanFordResult(graphTest, 0);
+                        stopwatch.Stop();
+                        totalTrivialTime += stopwatch.Elapsed.TotalMilliseconds;
+
+                        stopwatch.Restart();
+                        bellmanFord.QueueBellmanFord(graphTest, 0);
+                        stopwatch.Stop();
+                        totalQueueTime += stopwatch.Elapsed.TotalMilliseconds;
+
+                        successfulTests++;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+
+                if (successfulTests > 0)
+                {
+                    double avgTrivialTime = totalTrivialTime / successfulTests;
+                    double avgQueueTime = totalQueueTime / successfulTests;
+
+                    Console.WriteLine($"{vertices}\t{avgTrivialTime:F3}\t\t\t{avgQueueTime:F3}");
                 }
                 else
                 {
