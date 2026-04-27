@@ -9,7 +9,6 @@ namespace GrafoGeneravimasIrPaieska.Models
         public int From { get; set; }
         public int To { get; set; }
         public int Weight { get; set; }
-
         public Edge(int from, int to, int weight)
         {
             From = from;
