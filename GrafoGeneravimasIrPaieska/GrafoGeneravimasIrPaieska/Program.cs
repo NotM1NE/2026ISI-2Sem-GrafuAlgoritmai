@@ -1,7 +1,7 @@
 ﻿using GrafoGeneravimasIrPaieska.Models;
 using GrafoGeneravimasIrPaieska.Services;
-using System;
-using System.ComponentModel;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Net;
 
@@ -9,8 +9,17 @@ namespace GrafoGeneravimasIrPaieska;
 
 public class Program
 {
+    private static ILogger<Program> _logger = null!;
     public static void Main(string[] args)
     {
+        using var serviceProvider = new ServiceCollection()
+            .AddLogging(builder =>
+            {
+                builder.AddConsole();
+                builder.SetMinimumLevel(LogLevel.Information);
+            }).BuildServiceProvider();
+
+        _logger = serviceProvider.GetRequiredService<ILogger<Program>>();
         Graph currentGraph = null;
 
         while(true)
@@ -23,7 +32,7 @@ public class Program
             Console.WriteLine("4 - Patikrinti ar grafas jungus");
             Console.WriteLine("5 - Patikrinti ar briauna yra tiltas");
             Console.WriteLine("6 - Paleisti greicio testa");
-            Console.WriteLine("7 - Bellman-Ford testas");
+            Console.WriteLine("7 - Bellman-Ford");
             Console.WriteLine("8 - Bellman-Ford su eile");
             Console.WriteLine("9 - Taisyti neigiamus ciklus");
             Console.WriteLine("10 - Bellman-Ford greicio testas");
@@ -32,46 +41,53 @@ public class Program
 
             string? choice = Console.ReadLine();
 
-            switch(choice)
+            try
             {
-                case "1":
-                    currentGraph = CreateGraph();
-                    break;
-                case "2":
-                    currentGraph = GenerateRandomGraph();
-                    break;
-                case "3":
-                    PrintGraph(currentGraph);
-                    break;
-                case "4":
-                    CheckIfGraphIsConnected(currentGraph);
-                    break;
-                case "5":
-                    CheckBridge(currentGraph);
-                    break;
-                case "6":
-                    RunPerformanceTest();
-                    break;
-                case "7":
-                    RunBellmanFortTest(currentGraph);
-                    break;
-                case "8":
-                    RunQueueBellmanFord(currentGraph);
-                    break;
-                case "9":
-                    FixNegativeCycles(currentGraph);
-                    break;
-                case "10":
-                    RunBellmanFordPerformanceTest();
-                    break;
-                case "0":
-                    return;
-                default:
-                    Console.WriteLine("Neteisinga ivestias");
-                    break;
+                switch (choice)
+                {
+                    case "1":
+                        currentGraph = CreateGraph();
+                        break;
+                    case "2":
+                        currentGraph = GenerateRandomGraph();
+                        break;
+                    case "3":
+                        PrintGraph(currentGraph);
+                        break;
+                    case "4":
+                        CheckIfGraphIsConnected(currentGraph);
+                        break;
+                    case "5":
+                        CheckBridge(currentGraph);
+                        break;
+                    case "6":
+                        RunPerformanceTest();
+                        break;
+                    case "7":
+                        RunBellmanFortTest(currentGraph);
+                        break;
+                    case "8":
+                        RunQueueBellmanFord(currentGraph);
+                        break;
+                    case "9":
+                        FixNegativeCycles(currentGraph);
+                        break;
+                    case "10":
+                        RunBellmanFordPerformanceTest();
+                        break;
+                    case "0":
+                        return;
+                    default:
+                        Console.WriteLine("Neteisinga ivestias");
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ivyko klaida");
+                throw;
             }
         }
-
     }
 
 
@@ -198,7 +214,8 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
+            
+            _logger.LogError(ex, "Ivyko klaida GenerateRandomGraph");
             throw;
         }
     }
@@ -228,9 +245,16 @@ public class Program
         Console.WriteLine("Iveskite antra virsune: ");
         int v = int.Parse(Console.ReadLine());
 
+        if (graph == null)
+        {
+            _logger.LogError("Nera grafo");
+            return;
+        }
+           
+
         if (!graph.HasEdge(e, v))
         {
-            Console.WriteLine("Tokios briaunos grafe nera.");
+            _logger.LogInformation("Tokios briaunos grafe nera.");
             return;
         }
 
@@ -339,8 +363,8 @@ public class Program
 
         if (result.NegativeCycleEdge != null)
         {
-            Console.WriteLine("Grafe yra neigiamas ciklas.");
-            Console.WriteLine($"Problema rasta ties briauna: {result.NegativeCycleEdge}");
+            _logger.LogInformation("Grafe yra neigiamas ciklas.");
+            _logger.LogInformation($"Problema rasta ties briauna: {result.NegativeCycleEdge}");
         }
         else
         {
@@ -352,7 +376,7 @@ public class Program
     {
         if (graph == null)
         {
-            Console.WriteLine("Grafas neegzistuoja");
+            _logger.LogWarning("Grafas neegzistuoja");
             return;
         }
 
@@ -365,8 +389,8 @@ public class Program
 
         if (result.NegativeCycleEdge != null)
         {
-            Console.WriteLine("Grafe yra neigiamas ciklas.");
-            Console.WriteLine($"Problema rasta ties briauna: {result.NegativeCycleEdge}");
+            _logger.LogInformation("Grafe yra neigiamas ciklas.");
+            _logger.LogInformation($"Problema rasta ties briauna: {result.NegativeCycleEdge}");
         }
         else
         {
@@ -378,7 +402,7 @@ public class Program
     {
         if (graph == null)
         {
-            Console.WriteLine("Grafas neegzistuoja");
+            _logger.LogWarning("Grafas neegzistuoja");
             return;
         }
 
@@ -446,11 +470,11 @@ public class Program
                     double avgTrivialTime = totalTrivialTime / successfulTests;
                     double avgQueueTime = totalQueueTime / successfulTests;
 
-                    Console.WriteLine($"{vertices}\t{avgTrivialTime:F3}\t\t\t{avgQueueTime:F3}");
+                    _logger.LogInformation($"{vertices}\t{avgTrivialTime:F3}\t\t\t{avgQueueTime:F3}");
                 }
                 else
                 {
-                    Console.WriteLine($"{vertices}\tNepavyko sugeneruoti");
+                    _logger.LogError($"{vertices}\tNepavyko sugeneruoti");
                 }
             }
 

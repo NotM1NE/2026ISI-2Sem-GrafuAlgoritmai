@@ -1,7 +1,4 @@
 ﻿using GrafoGeneravimasIrPaieska.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GrafoGeneravimasIrPaieska.Services
 {
@@ -20,7 +17,7 @@ namespace GrafoGeneravimasIrPaieska.Services
 
             for (int i = 0; i < graph.Vertices; i++)
             {
-                distance[i] = null;
+                distance[i] = null;//kelias dar nerastas
                 previous[i] = -1;
             }
 
@@ -92,7 +89,7 @@ namespace GrafoGeneravimasIrPaieska.Services
             List<int> path = new List<int>();
             int current = end;
 
-            while (current != -1)
+            while (current != -1)//previous[i] = -1;
             {
                 path.Add(current);
 
@@ -117,21 +114,21 @@ namespace GrafoGeneravimasIrPaieska.Services
             if (!graph.HasVertex(start))
                 throw new ArgumentOutOfRangeException(nameof(start), "Tokios virsunes nera");
 
-            int?[] distance = new int?[graph.Vertices];
-            int[] previous = new int[graph.Vertices];
-            bool[] inQueue = new bool[graph.Vertices];
-            int[] relaxCount = new int[graph.Vertices];
+            int?[] distance = new int?[graph.Vertices]; // Trumpiausi zinomi atstumai nuo starto iki kiekvienos virsunes
+            int[] previous = new int[graph.Vertices];   // Ankstesne virsune trumpiausiame kelyje
+            bool[] inQueue = new bool[graph.Vertices];  // Ar virsune siuo metu yra eileje
+            int[] relaxCount = new int[graph.Vertices]; // Kiek kartu buvo pagerintas atstumas iki virsunes
 
             for (int i = 0; i < graph.Vertices; i++)
             {
-                distance[i] = null;
+                distance[i] = null;//kelias dar nerastas
                 previous[i] = -1;
             }
 
             Queue<int> queue = new Queue<int>();
 
             distance[start] = 0;
-            queue.Enqueue(start);
+            queue.Enqueue(start);//starta dedame i eile
             inQueue[start] = true;
 
             while (queue.Count > 0)
@@ -151,14 +148,14 @@ namespace GrafoGeneravimasIrPaieska.Services
                             previous[edge.To] = current;
                             relaxCount[edge.To]++;
 
-                            if (relaxCount[edge.To] >= graph.Vertices)
+                            if (relaxCount[edge.To] >= graph.Vertices)  //tas pats principas, jeigu iseina pagerinti reiskia neigiamas
                             {
-                                return new BellmanFordResult(distance, previous, edge);
+                                return new BellmanFordResult(distance, previous, edge);//neigiamas ciklas
                             }
 
                             if (!inQueue[edge.To])
                             {
-                                queue.Enqueue(edge.To);
+                                queue.Enqueue(edge.To);//jeogu pagerejo atstumas tai reikia patikrinti jo kaimynus
                                 inQueue[edge.To] = true;
                             }
                         }
@@ -198,7 +195,7 @@ namespace GrafoGeneravimasIrPaieska.Services
                 }
 
                 Console.WriteLine();
-                Console.WriteLine($"Pakeitimas #{changeNumber}");
+                Console.WriteLine($"Pakeitimas {changeNumber}");
                 Console.WriteLine("Rastas neigiamas ciklas:");
 
                 foreach (Edge edge in cycle)
@@ -248,6 +245,8 @@ namespace GrafoGeneravimasIrPaieska.Services
 
             int current = problemEdge.To;
 
+            // Sekame previous masyva atgal V kartu, kad current patektu i ciklo vidu.
+            // Cia nevaikstome per grafo briaunas, tik einame per previous rodykles.
             for (int i = 0; i < graph.Vertices; i++)
             {
                 current = previous[current];
@@ -256,11 +255,11 @@ namespace GrafoGeneravimasIrPaieska.Services
                     return new List<Edge>();
             }
 
-            int start = current;
+            int start = current; //virsune kuri jau yra ciklo viduje
             cycleVertices.Add(start);
 
             current = previous[start];
-
+            //renkam virsues tol, kol vel grisime i start
             while (current != start && current != -1)
             {
                 cycleVertices.Add(current);
@@ -274,6 +273,7 @@ namespace GrafoGeneravimasIrPaieska.Services
 
             List<Edge> cycleEdges = new List<Edge>();
 
+            //paverciame is virsuniu i briaunas
             for (int i = 0; i < cycleVertices.Count; i++)
             {
                 int from = cycleVertices[i];
