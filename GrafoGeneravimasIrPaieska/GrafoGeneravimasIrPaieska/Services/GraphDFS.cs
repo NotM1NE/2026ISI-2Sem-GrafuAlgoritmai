@@ -53,19 +53,68 @@ namespace GrafoGeneravimasIrPaieska.Services
             if (!graph.HasEdge(from, to))
                 throw new ArgumentOutOfRangeException("Tokios briaunos nera");
 
-            Edge edge = graph.AdjencyList[from].Find(x => x.To == to);
+            Graph copy = graph.CloneGraph();
+
+            Edge edge = copy.AdjencyList[from].Find(x => x.To == to);
 
             if (edge == null)
                 throw new ArgumentNullException(nameof(edge), "Tokios brianos nera");
 
             int weight = edge.Weight;
 
-            graph.RemoveEdge(from, to, weight);
+            copy.RemoveEdge(from, to, weight);
 
-            bool isConnected = IsConnected(graph);
-            graph.AddEdge(from, to, weight);
+            bool isConnected = IsConnected(copy);
+            copy.AddEdge(from, to, weight);
 
             return !isConnected;
+        }
+        public bool IsBridgeForEuler(Graph graph, int from, int to)
+        {
+            if (!graph.HasEdge(from, to))
+                throw new ArgumentOutOfRangeException("Tokios briaunos nera");
+
+            // Jei is sitos virsunes yra tik viena briauna,
+            // tai Fleury algoritme ja galima imti, net jei ji "tiltas"
+            if (graph.GetNeighbours(from).Count == 1)
+                return false;
+
+            int reachableBefore = CountReachableVertices(graph, from);
+
+            Graph copy = graph.CloneGraph();
+
+            Edge edge = copy.AdjencyList[from].Find(e => e.To == to);
+
+            if (edge == null)
+                throw new ArgumentNullException(nameof(edge), "Tokios briaunos nera");
+
+            copy.RemoveEdge(edge.From, edge.To, edge.Weight);
+
+            int reachableAfter = CountReachableVertices(copy, from);
+
+            return reachableAfter < reachableBefore;
+        }
+
+        private int CountReachableVertices(Graph graph, int start)
+        {
+            List<bool> visited = new List<bool>();
+
+            for (int i = 0; i < graph.Vertices; i++)
+            {
+                visited.Add(false);
+            }
+
+            DFS(graph, start, visited);
+
+            int count = 0;
+
+            for (int i = 0; i < visited.Count; i++)
+            {
+                if (visited[i])
+                    count++;
+            }
+
+            return count;
         }
     }
 }

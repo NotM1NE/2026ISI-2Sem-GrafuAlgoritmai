@@ -67,6 +67,15 @@ namespace GrafoGeneravimasIrPaieska.Models
             if (Directed == false)
                 AdjencyList[to].RemoveAll(edge => edge.To == from);
         }
+        public void RemoveEdge(Edge edge)
+        {
+            if (!HasEdge(edge.From, edge.To))
+                throw new ArgumentException("tokios brianos grafas neturi");
+
+            AdjencyList[edge.From].RemoveAll(tempEdge => tempEdge.To == edge.To);
+            if (Directed == false)
+                AdjencyList[edge.To].RemoveAll(tempEdge => tempEdge.To == edge.From);
+        }
         public int GetDegree(int vertex)
         {
             if (!HasVertex(vertex))
@@ -119,6 +128,20 @@ namespace GrafoGeneravimasIrPaieska.Models
                 }
                 Console.WriteLine();
             }
+        }
+        public Graph CloneGraph()
+        {
+            Graph copy = new Graph(Vertices, Directed);
+            for(int i = 0; i < Vertices;  i++)
+            {
+                foreach(Edge edge in AdjencyList[i])
+                {
+                    if(Directed || edge.From < edge.To)
+                        copy.AddEdge(edge.From, edge.To, edge.Weight);
+                }
+            }
+
+            return copy;
         }
     }
 }
