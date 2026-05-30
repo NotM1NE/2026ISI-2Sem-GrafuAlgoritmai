@@ -145,7 +145,7 @@ public class Program
                         Stopwatch stopwatch = new Stopwatch();
 
                         stopwatch.Start();
-                        eulerAlgorithms.Fluery();
+                        eulerAlgorithms.Fleury();
                         stopwatch.Stop();
                         totalFleuryTime += stopwatch.Elapsed.TotalMilliseconds;
 
@@ -207,7 +207,7 @@ public class Program
         try
         {
             EulerAlgorithms eulerAlgorithms = new EulerAlgorithms(currentGraph);
-            var path = eulerAlgorithms.Fluery();
+            var path = eulerAlgorithms.Fleury();
             Console.WriteLine("Eulerio ciklas Fluery algoritmu");
             Console.WriteLine(string.Join(" --> ", path));
         }

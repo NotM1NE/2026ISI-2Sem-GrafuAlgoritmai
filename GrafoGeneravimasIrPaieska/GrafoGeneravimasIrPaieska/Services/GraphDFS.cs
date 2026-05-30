@@ -72,7 +72,10 @@ namespace GrafoGeneravimasIrPaieska.Services
         public bool IsBridgeForEuler(Graph graph, int from, int to)
         {
             if (!graph.HasEdge(from, to))
-                throw new ArgumentOutOfRangeException("Tokios briaunos nera");
+            {
+                Console.WriteLine("Tokios briaunos nera");
+                return false;
+            }
 
             // Jei is sitos virsunes yra tik viena briauna,
             // tai Fleury algoritme ja galima imti, net jei ji "tiltas"
@@ -86,7 +89,10 @@ namespace GrafoGeneravimasIrPaieska.Services
             Edge edge = copy.AdjencyList[from].Find(e => e.To == to);
 
             if (edge == null)
-                throw new ArgumentNullException(nameof(edge), "Tokios briaunos nera");
+            {
+                Console.WriteLine(nameof(edge), "Tokios briaunos nera");
+                return false;
+            }
 
             copy.RemoveEdge(edge.From, edge.To, edge.Weight);
 
@@ -94,7 +100,7 @@ namespace GrafoGeneravimasIrPaieska.Services
 
             return reachableAfter < reachableBefore;
         }
-
+        //kiek dbr virsuniu yra pasiekiama
         private int CountReachableVertices(Graph graph, int start)
         {
             List<bool> visited = new List<bool>();

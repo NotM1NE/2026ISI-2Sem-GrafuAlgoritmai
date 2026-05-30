@@ -63,7 +63,7 @@ namespace GrafoGeneravimasIrPaieska.Services
 
             return cycle;
         }
-        public List<int> Fluery()
+        public List<int> Fleury()
         {
             Graph tempGraph = _currentGraph.CloneGraph();
 
